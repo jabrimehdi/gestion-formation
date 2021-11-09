@@ -1,0 +1,341 @@
+<nb-card>
+    <nb-card-body>
+      <nb-stepper #stepper [linear]="linearMode" disableStepNavigation>
+        <nb-step [stepControl]="nameForm" label="Formation">
+          <form  #nameForm="ngForm" class="step-container">
+            <nb-card>
+                <nb-card-header *ngIf="formation?.id; else addHeader">Formation Selectionée</nb-card-header>
+                <ng-template #addHeader>
+                  <nb-card-header>Ajouter Formation</nb-card-header>
+                </ng-template>
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputTitre" class="label">Titre</label>
+                        <input type="text" nbInput fullWidth id="inputTitre" placeholder="Entrer Titre Formation"
+                                class="form-control"
+                                name="titre"
+                                required
+                                [(ngModel)]="formation.titre"
+                                #titre="ngModel"
+                                [disabled]="formation?.id ? true : false"
+                                [status]="titre.invalid ? 'danger' : 'basic'">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputAnnee" class="label">Année</label>
+                        <input nbInput fullWidth id="inputAnnee" placeholder="Entrer Année Formation"
+                        class="form-control"
+                        name="annee"
+                        required
+                        [(ngModel)]="formation.annee"
+                        #annee="ngModel"
+                        [disabled]="formation?.id ? true : false"
+                        [status]="annee.invalid ? 'danger' : 'basic'"
+                        [nbDatepicker]="picker">
+                        <nb-datepicker #picker [min]="min" [max]="max"></nb-datepicker>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputDuree" class="label">Durée</label>
+                        <input type="number" nbInput fullWidth id="inputDuree" placeholder="Entrer Durée Formation"
+                        class="form-control"
+                        name="duree"
+                        required
+                        [(ngModel)]="formation.duree"
+                        #duree="ngModel"
+                        [disabled]="formation?.id ? true : false"
+                        [status]="duree.invalid ? 'danger' : 'basic'">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputBudget" class="label">Budget</label>
+                        <input type="number" nbInput fullWidth id="inputBudget" placeholder="Entrer Budget Formation"
+                        class="form-control"
+                        name="budget"
+                        required
+                        [(ngModel)]="formation.budget"
+                        #budget="ngModel"
+                        [disabled]="formation?.id ? true : false"
+                        [status]="budget.invalid ? 'danger' : 'basic'">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputNbSession" class="label">Nombre Sessions</label>
+                        <input type="number" nbInput fullWidth id="inputNbSession" placeholder="Entrer Nombre de Sessions"
+                        class="form-control"
+                        name="nb_session"
+                        required
+                        [(ngModel)]="formation.nb_session"
+                        #nbSession="ngModel"
+                        [disabled]="formation?.id ? true : false"
+                        [status]="nbSession.invalid ? 'danger' : 'basic'">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputType" class="label">Type</label>
+                        <nb-select fullWidth placeholder="Choisir Type Formation"
+                        class="form-control"
+                        name="type"
+                        required
+                        [(ngModel)]="formation.type"
+                        #type="ngModel"
+                        [disabled]="formation?.id ? true : false"
+                        [status]="type.invalid ? 'danger' : 'basic'">
+                            <nb-option value="INTERNATIONAL">INTERNATIONAL</nb-option>
+                            <nb-option value="NATIONAL">NATIONAL</nb-option>
+                          </nb-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group">
+                        <label for="inputType" class="label">Domaine</label>
+                        <nb-select fullWidth placeholder="Choisir Domaine Formation"
+                        class="form-control"
+                        name="domaine"
+                        required
+                        [(ngModel)]="domaineForm"
+                        #domaine="ngModel"
+                        [disabled]="formation?.id ? true : false"
+                        [status]="domaine.invalid ? 'danger' : 'basic'">
+                            <nb-option *ngFor="let domain of domains" value={{domain.id}}>{{domain.libelle}}</nb-option>
+                          </nb-select>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </nb-card-body>
+              </nb-card>
+              <button nbButton disabled nbStepperPrevious>prev</button>
+            <button nbButton (click)="test(nameForm,stepper)" nbStepperNext>next</button>
+          </form>
+        </nb-step>
+  
+        <nb-step [stepControl]="movieForm" label="Session">
+          <form #movieForm="ngForm" class="step-container">
+            <nb-card>
+                <nb-card-header>{{formation.titre}}</nb-card-header>
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputDateDeb" class="label">Date Début</label>
+                        <input nbInput fullWidth id="inputDateDeb" placeholder="Entrer Date Début Session de Formation"
+                        class="form-control"
+                        name="dateDeb"
+                        required
+                        [(ngModel)]="sessionFormation.dateDeb"
+                        (ngModelChange)="dataChanged($event,movieForm)"
+                        #dateDeb="ngModel"
+                        [status]="dateDeb.invalid ? 'danger' : 'basic'"
+                        [nbDatepicker]="picker1">
+                        <nb-datepicker #picker1 [min]="min" [max]="max"></nb-datepicker>
+                    </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputDateFin" class="label">Date Fin</label>
+                        <input nbInput fullWidth id="inputDateFin" placeholder="Entrer Date Fin Session de Formation"
+                        class="form-control"
+                        name="dateFin"
+                        required
+                        [(ngModel)]="sessionFormation.dateFin"
+                        (ngModelChange)="dataChanged($event,movieForm)"
+                        #dateFin="ngModel"
+                        [status]="dateFin.invalid ? 'danger' : 'basic'"
+                        [nbDatepicker]="picker2">
+                        <nb-datepicker #picker2 [min]="sessionFormation.dateDeb" [max]="max"></nb-datepicker>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputLieu" class="label">Lieu</label>
+                        <input type="text" nbInput fullWidth id="inputLieu" placeholder="Entrer Lieu Session de Formation"
+                        class="form-control"
+                        name="lieu"
+                        required
+                        [(ngModel)]="sessionFormation.lieu"
+                        #lieu="ngModel"
+                        [status]="lieu.invalid ? 'danger' : 'basic'">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputNbParticipants" class="label">Nombre Participants</label>
+                        <input type="number" nbInput fullWidth id="inputNbParticipants" placeholder="Entrer Nombre Participants"
+                        class="form-control"
+                        name="nbParticipants"
+                        required
+                        [(ngModel)]="sessionFormation.nbParticipants"
+                        (ngModelChange)="participantEvent($event,movieForm)"
+                        #nbParticipants="ngModel"
+                        [status]="nbParticipants.invalid ? 'danger' : 'basic'">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputFormateur" class="label">Formateur</label>
+                            <nb-select fullWidth placeholder="Choisir Formateur de Session de Formation"
+                            class="form-control"
+                            name="formateur"
+                            required
+                            [(ngModel)]="sessionFormation.formateur"
+                            #formateur="ngModel"
+                            [status]="formateur.invalid ? 'danger' : 'basic'">
+                                <nb-option *ngFor="let formateur of formateurs" value={{formateur.id}}>{{formateur.nom}}</nb-option>
+                              </nb-select>
+                          </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputOrganisme" class="label">Organisme</label>
+                            <nb-select fullWidth placeholder="Choisir Organisme de Session Formation"
+                            class="form-control"
+                            name="organisme"
+                            required
+                            [(ngModel)]="sessionFormation.organisme"
+                            #organisme="ngModel"
+                            [status]="organisme.invalid ? 'danger' : 'basic'">
+                                <nb-option *ngFor="let organisme of organismes" value={{organisme.id}}>{{organisme.libelle}}</nb-option>
+                              </nb-select>
+                          </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="inputParticipant" class="label">Participants</label>
+                            <nb-select multiple fullWidth placeholder="Choisir Participants de Session Formation"
+                            class="form-control"
+                            name="participant"
+                            required
+                            [(ngModel)]="sessionFormation.participants"
+                            (ngModelChange)="participantEvent($event,movieForm)"
+                            #participant="ngModel"
+                            [status]="participant.invalid ? 'danger' : 'basic'">
+                                <nb-option *ngFor="let p of participants" value={{p.id}}>{{p.nom+" "+p.prenom}}</nb-option>
+                              </nb-select>
+                          </div>
+                    </div>
+                  </div>                  
+                </nb-card-body>
+              </nb-card>
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton (click)="addFormation(movieForm)" nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
+        <nb-step [hidden]="true">
+          <div class="step-container">
+            <nb-card>
+              <nb-card-body>
+            
+                <nb-tabset fullWidth>
+                  <nb-tab tabTitle="Formation">
+                    <div class="row">
+                      <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Titre</b></nb-card-header>
+                          <nb-card-body><b>{{showedFormation.titre}}</b></nb-card-body>
+                        </nb-card>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Type</b></nb-card-header>
+                          <nb-card-body><b>{{showedFormation.type}}</b></nb-card-body>
+                        </nb-card>
+                      </div>
+                      <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Durée</b></nb-card-header>
+                          <nb-card-body><b>{{showedFormation.duree}}</b></nb-card-body>
+                        </nb-card>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Domaine</b></nb-card-header>
+                          <nb-card-body><b>{{showedFormation.domaine}}</b></nb-card-body>
+                        </nb-card>
+                      </div>
+                    </div>
+                  </nb-tab>
+                  <nb-tab tabTitle="Sessions">
+                    <div class="row">
+                      <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Date De Début</b></nb-card-header>
+                          <nb-card-body><b>{{showedSession.date_debut}}</b></nb-card-body>
+                        </nb-card>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Date De Fin</b></nb-card-header>
+                          <nb-card-body><b>{{showedSession.date_fin}}</b></nb-card-body>
+                        </nb-card>
+                      </div>
+                      <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Lieu</b></nb-card-header>
+                          <nb-card-body><b>{{showedSession.lieu}}</b></nb-card-body>
+                        </nb-card>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Nombre de Participants</b></nb-card-header>
+                          <nb-card-body><b>{{showedSession.nb_participant}}</b></nb-card-body>
+                        </nb-card>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Formateur</b></nb-card-header>
+                          <nb-card-body><b>{{showedSession.formateur}}</b></nb-card-body>
+                        </nb-card>
+                      </div>
+                      <div class="col-6 col-sm-4">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Organisme</b></nb-card-header>
+                          <nb-card-body><b>{{showedSession.organisme}}</b></nb-card-body>
+                        </nb-card>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <nb-card size="tiny" status="info">
+                          <nb-card-header><b>Participants</b></nb-card-header>
+                          <nb-card-body>
+                            <p *ngFor="let p of showedSession.participants" class="pb-2"><b>{{p.nom+" "+p.prenom}}</b></p>
+                          </nb-card-body>
+                        </nb-card>
+                      </div>
+                    </div>
+                  </nb-tab>
+                </nb-tabset>
+            
+              </nb-card-body>
+            </nb-card>
+            <button nbButton (click)="stepper.reset()">Ajouter Nouvelle Session/Formation</button>
+          </div>
+        </nb-step>
+      </nb-stepper>
+    </nb-card-body>
+  </nb-card>

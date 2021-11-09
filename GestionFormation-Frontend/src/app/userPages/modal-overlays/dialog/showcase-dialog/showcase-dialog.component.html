@@ -1,0 +1,18 @@
+<nb-card>
+  <nb-card-header>{{ title }}</nb-card-header>
+  <nb-card-body *ngIf="participant != null">
+    Are you sure to delete participant :<b> {{participant?.nom + " " + participant?.prenom }} </b>
+  </nb-card-body>
+  <nb-card-body *ngIf="formateur != null">
+    Are you sure to delete formateur :<b> {{formateur?.nom + " " + formateur?.prenom }} </b>
+  </nb-card-body>
+  <nb-card-body *ngIf="formation != null">
+    Are you sure to delete formation :<b> {{formation?.titre}} </b>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="d-inline p-5">
+    <button  nbButton hero status="danger" (click)="delete()">Confirm</button>
+    <button  nbButton hero status="primary" (click)="dismiss()">Dismiss</button>
+  </div>
+  </nb-card-footer>
+</nb-card>

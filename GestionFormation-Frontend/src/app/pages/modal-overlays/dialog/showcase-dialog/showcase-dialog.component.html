@@ -1,0 +1,24 @@
+<nb-card>
+  <nb-card-header>{{ title }}</nb-card-header>
+  <nb-card-body *ngIf='user != null'>
+    Are you sure to delete User : <b>{{user.login}}</b>
+  </nb-card-body>
+  <nb-card-body *ngIf='organisme != null'>
+    Are you sure to delete Organisme : <b>{{organisme.libelle}}</b>
+  </nb-card-body>
+  <nb-card-body *ngIf='profile != null'>
+    Are you sure to delete Profile : <b>{{profile.libelle}}</b>
+  </nb-card-body>
+  <nb-card-body *ngIf='pays != null'>
+    Are you sure to delete Pays : <b>{{pays.nom}}</b>
+  </nb-card-body>
+  <nb-card-body *ngIf='domaine != null'>
+    Are you sure to delete Domaine : <b>{{domaine.libelle}}</b>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="d-inline p-5">
+    <button  nbButton hero status="danger" (click)="delete()">Confirm</button>
+    <button  nbButton hero status="primary" (click)="dismiss()">Dismiss</button>
+  </div>
+  </nb-card-footer>
+</nb-card>

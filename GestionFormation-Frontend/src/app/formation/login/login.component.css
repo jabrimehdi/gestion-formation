@@ -1,0 +1,55 @@
+@font-face {
+    font-family: Script;
+    src: url(../../../assets/SCRIPTBL.woff);
+  }
+  
+  form {
+    transform: translateX(50px);
+  }
+  
+  .btn-block {
+    width: 94.5% !important;
+  }
+  
+  a,
+  a:hover {
+    color: #ec1b23 !important;
+  }
+  
+  .title {
+    font-family: Script;
+    font-size: 70px;
+    margin-bottom: 1.75rem;
+  }
+
+  .sub-title{
+    padding-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+  
+  .error {
+    color: red !important;
+  }
+  .btn.btn-hero-success {
+    background-image: linear-gradient(to right, #2f3238, #2f3238);
+    box-shadow: 0 0 0 0 #2f3238, 0 0 0 0 #2f3238;
+  }
+  .btn.btn-hero-success:hover,
+  .nb-theme-default .btn.btn-hero-success .hover {
+    background-image: linear-gradient(to right, #2f3238, #2f3238);
+  }
+  .btn.btn-hero-success:focus,
+  .nb-theme-default .btn.btn-hero-success .focus {
+    background-image: linear-gradient(to right, #2f3238, #2f3238);
+  }
+  
+  .icon-user {
+    font-size: 60px;
+    margin-right: 10px;
+  }
+  #regbtn {
+    color: aliceblue;
+    cursor: pointer;
+  }
+  
+  

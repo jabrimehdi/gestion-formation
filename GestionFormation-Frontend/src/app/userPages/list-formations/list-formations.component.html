@@ -1,0 +1,12 @@
+<nb-card>
+    <nb-card-header>
+      Liste Des Formations
+    </nb-card-header>
+  
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="formations" (deleteConfirm)="onDeleteConfirm($event)" 
+       (editConfirm)="editUser($event)" (userRowSelect)="onUserRowSelect($event)" (createConfirm)="addFormation($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+  

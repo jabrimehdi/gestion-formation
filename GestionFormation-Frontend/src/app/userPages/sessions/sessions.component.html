@@ -1,0 +1,62 @@
+  
+  <nb-card>
+    <nb-card-header>
+      Liste Des Sessions Associées A La Formation <b>{{selectedFormation.titre | uppercase}}</b>
+    </nb-card-header>
+  
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="sessions" (deleteConfirm)="onDeleteConfirm($event)" 
+       (editConfirm)="editSession($event)" (userRowSelect)="onUserRowSelect($event)" (createConfirm)="addSessionToFormation($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+
+  <div *ngIf="showParticipants">
+    <nb-card>
+      <nb-card-header class="row justify-content-between">
+        <div class="col-5"> 
+        Liste des participants de Session <b>{{selectedSess.lieu}}</b>
+      </div>
+        <div class="col-1">
+          <button type="button" class="btn btn-outline-primary" (click)="addParticipant()"><i class="nb-plus"></i></button></div>
+      </nb-card-header>
+      <nb-card-body>
+      <nb-list>
+        <nb-list-item *ngFor="let participant of participants">
+          <div class="col-5">
+          {{participant.nom + " " + participant.prenom}}
+        </div>
+        <div class="col-5">
+          {{participant.type}}
+        </div>
+        <div class="col-1">
+          {{participant.tel}}
+        </div>
+        </nb-list-item>
+      </nb-list>
+    </nb-card-body>
+    </nb-card>
+  </div>
+
+  <ng-template #listParts let-data>
+    <nb-card>
+    <nb-card-body>
+    <nb-list>
+      <nb-list-item *ngFor="let parts of data.allParts">
+        <div class="col-5">
+          {{parts.nom + " " + parts.prenom}}
+        </div>
+        <div class="col-5">
+          {{parts.type}}
+        </div>
+        <div class="col-1">
+          <nb-checkbox status="basic" (checkedChange)="joinSessionParticipant($event, parts)"></nb-checkbox>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+  <nb-card-footer>
+    <button status="info" fullWidth nbButton [disabled]="checkList()" (click)="addToSession($event)">Ajouter à la Session</button>
+  </nb-card-footer>
+  </nb-card>
+  </ng-template>

@@ -1,0 +1,11 @@
+<nb-card>
+    <nb-card-header>
+      Liste Des Profils
+    </nb-card-header>
+  
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="profils" (deleteConfirm)="onDeleteConfirm($event)" (createConfirm)="addProfile($event)" (editConfirm)="editProfile($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+  
